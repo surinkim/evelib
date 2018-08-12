@@ -11,7 +11,7 @@ node {
     }
     
     stage('Test'){
-        bat ".\\bin\\Win32\\release\\EveTest.exe"
+        bat ".\\bin\\Win32\\release\\EveTest.exe --gtest_output=xml:result.xml" 
     }
     
 

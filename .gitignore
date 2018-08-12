@@ -1,6 +1,7 @@
 *.db
 *.opendb
 *.vs
+*.user
 ipch/
 bin/
 obj/
