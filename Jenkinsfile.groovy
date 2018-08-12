@@ -1,10 +1,18 @@
 node {
-
     stage('Checkout') {
-        git branch: 'master',
-            url: 'https://github.com/surinkim/evelib.git'
+        checkout([$class: 'GitSCM',
+              branches: [[name: '*/master']],
+              doGenerateSubmoduleConfigurations: false,
+              extensions: [[$class: 'SubmoduleOption',
+                            disableSubmodules: false,
+                            parentCredentials: false,
+                            recursiveSubmodules: true,
+                            reference: '',
+                            trackingSubmodules: false]], 
+              submoduleCfg: [], 
+              userRemoteConfigs: [[url: 'https://github.com/surinkim/evelib.git']]])
     }
-    
+
     stage('Build'){
         bat "msbuild eve.sln /t:Rebuild /p:Configuration=Debug;Platform=x86"
         bat "msbuild eve.sln /t:Rebuild /p:Configuration=Release;Platform=x86"
@@ -28,9 +36,5 @@ node {
            ])
         
     }
-
-
-    
-    
 
 }
