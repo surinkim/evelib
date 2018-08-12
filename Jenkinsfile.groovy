@@ -22,7 +22,7 @@ node {
         bat ".\\bin\\Win32\\release\\EveTest.exe --gtest_output=xml:result.xml"
     }
     
-    stage('Publish Test Result'){
+    stage('Save Test Result'){
         
         step([$class: 'XUnitPublisher', testTimeMargin: '3000', thresholdMode:
             2,
@@ -35,6 +35,10 @@ node {
             ]
            ])
         
+    }
+    
+    stage('Archive') {
+        archiveArtifacts 'bin\\Win32\\Release\\Eve.lib'
     }
 
 }
