@@ -11,8 +11,26 @@ node {
     }
     
     stage('Test'){
-        bat ".\\bin\\Win32\\release\\EveTest.exe --gtest_output=xml:result.xml" 
+        bat ".\\bin\\Win32\\release\\EveTest.exe --gtest_output=xml:result.xml"
     }
+    
+    stage('Publish Test Result'){
+        
+        step([$class: 'XUnitPublisher', testTimeMargin: '3000', thresholdMode:
+            2,
+            thresholds: [
+             [$class: 'FailedThreshold', failureNewThreshold: '', failureThreshold: '0', unstableNewThreshold: '', unstableThreshold: ''],
+             [$class: 'SkippedThreshold', failureNewThreshold: '', failureThreshold: '0', unstableNewThreshold: '', unstableThreshold: '']
+            ],
+            tools: [
+             [$class: 'GoogleTestType', deleteOutputFiles: true, failIfNotNew: true, pattern: '\\**\\result.xml', skipNoTestFiles: false, stopProcessingIfError: true]
+            ]
+           ])
+        
+    }
+
+
+    
     
 
 }
