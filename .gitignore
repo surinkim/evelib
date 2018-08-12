@@ -1,0 +1,6 @@
+*.db
+*.opendb
+*.vs
+ipch/
+bin/
+obj/
